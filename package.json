@@ -1,0 +1,38 @@
+{
+  "name": "pubstylematerial",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/roboto": "^5.0.13",
+    "@hookform/resolvers": "^3.7.0",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/material": "^5.16.0",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@types/yup": "^0.32.0",
+    "formik": "^2.4.6",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
+    "react-responsive-carousel": "^3.2.23",
+    "styled-components": "^6.1.11",
+    "xlsx": "^0.18.5",
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
