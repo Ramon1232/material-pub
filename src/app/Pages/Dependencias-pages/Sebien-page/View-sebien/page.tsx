@@ -6,7 +6,7 @@ import SessionAuthProvider from '../../../../context/SessionAuthProvider';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-const page = () => {
+const ViewSebien = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -31,4 +31,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default ViewSebien;

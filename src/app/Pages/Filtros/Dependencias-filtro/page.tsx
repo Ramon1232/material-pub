@@ -11,7 +11,7 @@ const { Content } = Layout;
 const { Search } = Input;
 const { Option } = Select;
 
-const filtroDependencias: React.FC = () => {
+const FiltroDependencias: React.FC = () => {
     const [data, setData] = useState<Beneficiario[]>([]);
     const [filteredData, setFilteredData] = useState<Beneficiario[]>([]);
     const [searchPrimerApellido, setSearchPrimerApellido] = useState<string>('');
@@ -346,4 +346,4 @@ const filtroDependencias: React.FC = () => {
     );
 };
 
-export default filtroDependencias;
+export default FiltroDependencias;

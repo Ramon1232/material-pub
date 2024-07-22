@@ -11,7 +11,7 @@ const { Content } = Layout;
 const { Search } = Input;
 const { Option } = Select;
 
-const filtroProgramas: React.FC = () => {
+const FiltroProgramas: React.FC = () => {
     const [data, setData] = useState<Beneficiario[]>([]);
     const [filteredData, setFilteredData] = useState<Beneficiario[]>([]);
     const [searchPrimerApellido, setSearchPrimerApellido] = useState<string>('');
@@ -346,4 +346,4 @@ const filtroProgramas: React.FC = () => {
     );
 };
 
-export default filtroProgramas;
+export default FiltroProgramas;
