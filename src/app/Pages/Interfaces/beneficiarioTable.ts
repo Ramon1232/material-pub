@@ -1,0 +1,34 @@
+export interface Beneficiario {
+    curp: string;
+    primer_apellido: string;
+    segundo_apellido: string;
+    nombre: string;
+    fecha_nacimiento: string;
+    cve_ent_nac: string;
+    sexo: string;
+    discapacidad: string;
+    indigena: string;
+    cve_civil: string;
+    cve_dependencia: string;
+    cve_institucion: string;
+    cve_programa: string;
+    cve_intra_programa: string;
+    cve_ent_fed: number;
+    cve_municipio: string;
+    cve_localidad: string;
+    fecha_beneficio: string;
+    cve_tipo_beneficiario: string;
+    cve_tipo_beneficio: string;
+    cantidad_apoyo: number;
+    tipo_vial: string;
+    nom_vial: string;
+    num_int_num: string;
+    num_int_alf: string;
+    nom_loc: string;
+    cve_loc: string;
+    nom_mun: string;
+    cve_mun: string;
+    nom_ent: string;
+    cve_ent: string;
+    observaciones: string;
+  }
