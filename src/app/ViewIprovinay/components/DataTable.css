@@ -1,0 +1,136 @@
+.table-container {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 100%; /* Ajusta el valor según tus necesidades */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  overflow-x: auto; /* Permite el scroll horizontal */
+  border-radius: 8px;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  
+}
+
+
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+  }
+}
+.form-control-small {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.0rem;
+  border-radius: 0.25rem; /* Borde redondeado */
+  background-color: transparent;
+  max-width: 200px; /* Ancho máximo */
+  width: 100%; /* Asegura que sea responsivo */
+  font-family: 'gotham rounded medium';
+  box-sizing: border-box;
+  margin-bottom: 5px; /* Ajusta el valor según tus necesidades */
+}
+
+.form-group-small {
+  display: inline-block;
+  margin-right: 30px;
+}
+.form-control-small:focus {
+  border-color: #79142A; /* Cambia el color del borde al seleccionar */
+  box-shadow: 0 0 0 0.2rem rgba(121, 20, 42, 0.30); /* Sombra para el enfoque */
+}
+
+/* Cambiar color de fondo y fuente de los botones */
+.btn-custom-primary {
+  background-color: #79142A; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  font-family: 'gotham rounded medium';  /* Cambiar fuente */
+  border: none; /* Eliminar borde por defecto */
+  border-radius: 0.35rem; /* Bordes redondeados */
+  padding: 0.5rem 1rem; /* Tamaño del botón */
+  margin-right: 30px;
+}
+
+.btn-custom-secondary {
+  background-color: #79142A; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  font-family: 'gotham rounded medium';  /* Cambiar fuente */
+  border: none; /* Eliminar borde por defecto */
+  border-radius: 0.35rem; /* Bordes redondeados */
+  padding: 0.5rem 1rem; /* Tamaño del botón */
+  margin-right: 30px;
+
+}
+
+/* Cambiar color de fondo del botón cuando está en estado de hover */
+.btn-custom-primary:hover {
+  background-color: #79142A; /* Color de fondo en hover */
+  color: #fff; /* Color del texto en hover */
+}
+
+.btn-custom-secondary:hover {
+  background-color: #79142A; /* Color de fondo en hover */
+  color: #fff; /* Color del texto en hover */
+}
+
+
+.table thead th {
+  text-align: center; /* Centra el texto, puedes cambiar a left o right */
+  background-color: #60595D; /* Color de fondo opcional para encabezados */
+  padding: 8px; /* Espaciado opcional alrededor del texto */
+  color: #fff;
+  font-family: 'gotham rounded medium';
+}
+
+/* Alineación de texto en las celdas del cuerpo de la tabla */
+.table tbody td {
+  text-align: center; /* Cambia la alineación según tus necesidades */
+  padding: 8px; /* Espaciado opcional alrededor del texto */
+  font-family: 'gotham rounded medium';
+}
+
+
+.pagination-container {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  margin-top: 20px; /* Espaciado opcional alrededor del componente de paginación */
+}
+
+/* Estilo para los ítems de la paginación activos */
+.pagination-container .page-item.active .page-link {
+  background-color: #60595D; /* Color de fondo para el ítem activo */
+  color: #fff; /* Color del texto para el ítem activo */
+  border-color: #60595D; /* Color del borde para el ítem activo */
+  font-size: 16px; /* Tamaño del texto dentro de los ítems de la paginación */
+  padding: 8px 16px; /* Tamaño del área clickeable de cada ítem */
+  border-radius: 4px; /* Redondeo de los bordes */
+}
+
+/* Estilo para los ítems de la paginación no activos */
+.pagination-container .page-item .page-link {
+  background-color: #DACEC0; /* Color de fondo para los ítems no activos */
+  color: #79142A; /* Color del texto para los ítems no activos */
+  border-color: #60595D; /* Color del borde para los ítems no activos */
+  font-size: 16px; /* Tamaño del texto dentro de los ítems de la paginación */
+  padding: 8px 16px; /* Tamaño del área clickeable de cada ítem */
+}
+
+/* Estilo para los ítems de la paginación al pasar el ratón sobre ellos */
+.pagination-container .page-item:hover .page-link {
+  background-color: #e9ecef; /* Color de fondo al pasar el ratón sobre los ítems */
+  color: #79142A; /* Color del texto al pasar el ratón sobre los ítems */
+  border-color: #adb5bd; /* Color del borde al pasar el ratón sobre los ítems */
+  font-size: 16px; /* Tamaño del texto dentro de los ítems de la paginación */
+  padding: 8px 16px; /* Tamaño del área clickeable de cada ítem */
+}
