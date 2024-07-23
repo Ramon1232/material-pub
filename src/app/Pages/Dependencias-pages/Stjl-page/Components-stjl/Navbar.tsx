@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
           </div>
         ) : (
           <Box display="flex" justifyContent="center" alignItems="center" width="100%" sx={{ display: 'flex', gap: 6 }}>
-            <Link href="/Pages/Dependencias-pages/Sebien-page">
+            <Link href="/Pages/Dependencias-pages/Stjl-page">
               <Button
                 sx={{
                   textDecoration: 'none',
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
                 Inicio
               </Button>
             </Link>
-            <Link href="/Pages/Dependencias-pages/Sebien-page/Carga-sebien">
+            <Link href="/Pages/Dependencias-pages/Stjl-page/Carga-stjl">
               <Button
                 sx={{
                   textDecoration: 'none',
@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
                 Carga de Documentos
               </Button>
             </Link>
-            <Link href="/Pages/Dependencias-pages/Sebien-page/View-sebien">
+            <Link href="/Pages/Dependencias-pages/Stjl-page/View-stjl">
               <Button
                 sx={{
                   textDecoration: 'none',

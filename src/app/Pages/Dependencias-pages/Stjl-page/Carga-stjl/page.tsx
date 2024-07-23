@@ -22,9 +22,9 @@ import {
   Container,
   TablePagination,
 } from '@mui/material';
-import Navbar from '../Components/Navbar';
-import Footer from '../../../Components/Footer';
 import { Beneficiario } from '../../../Interfaces/beneficiarioTable';
+import Navbar from '../Components-stjl/Navbar';
+import Footer from '../../../../Pages/Components/Footer';
 
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
   <span style={{ position: 'absolute', overflow: 'hidden', clip: 'rect(0 0 0 0)', height: '1px', width: '1px', margin: '-1px', padding: '0', border: '0' }}>
@@ -32,7 +32,7 @@ const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Carga = () => {
+const CargaStjl = () => {
   const { data: session, status } = useSession();
   const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -117,7 +117,7 @@ const Carga = () => {
       setLoading(true);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sebien-pub/post-excel`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/stjl-pub/post-excel`,
         beneficiarios,
         {
           headers: {
@@ -361,7 +361,7 @@ const Carga = () => {
   );
 };
 
-export default Carga;
+export default CargaStjl;
 
 const styles = {
   tableCell: {

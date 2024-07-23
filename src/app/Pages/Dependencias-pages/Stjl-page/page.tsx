@@ -1,26 +1,26 @@
 'use client';
 import React from 'react';
 import { Container } from '@mui/material';
-import Navbar from './Components/Navbar';
-import Contenido from './Components/Contenido';
 import Footer from '../../Components/Footer';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; 
 import SessionAuthProvider from '../../../context/SessionAuthProvider'; 
+import Navbar from './Components-stjl/Navbar';
+import Contenido from './Components-stjl/Contenido';
 
 const Page = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  React.useEffect(() => {
-    if (!session) {
-      router.push('/Pages/Login');
-    }
-  }, [session, router]);
+//   React.useEffect(() => {
+//     if (!session) {
+//       router.push('/Pages/Login');
+//     }
+//   }, [session, router]);
 
-  if (status === 'loading') {
-    return <p>Cargando...</p>;
-  }
+//   if (status === 'loading') {
+//     return <p>Cargando...</p>;
+//   }
 
   return (
     <SessionAuthProvider>
@@ -28,7 +28,7 @@ const Page = () => {
         <Navbar />
         <Container maxWidth="md">
           <Contenido 
-            imageUrl="/bienestar.png"
+            imageUrl="/STJL.png"
             altText="Descripción de la imagen"
             text="Padrón Único de Beneficiarios"
             text1="Secretaría de Bienestar e Igualdad Sustantiva"

@@ -28,7 +28,7 @@ const FiltroBeneficiarios: React.FC = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get<Beneficiario[]>('http://localhost:5000/beneficiario-general/all');
+            const response = await axios.get<Beneficiario[]>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/beneficiario-general/all`);
             setData(response.data);
             setFilteredData(response.data);
         } catch (error) {
