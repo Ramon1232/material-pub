@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar'
 import Footer from '../../Components/Footer'
 import { Container, Grid, Typography } from '@mui/material'
 
-const page = () => {
+const Page = () => {
     return (
         <div>
             <Navbar />
@@ -24,4 +24,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page;

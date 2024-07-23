@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import { Beneficiario, Beneficio } from '../../Interfaces/interfaces';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
+import { Container } from '@mui/material';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -18,8 +19,6 @@ const FiltroBeneficiarios: React.FC = () => {
     const [searchSegundoApellido, setSearchSegundoApellido] = useState<string>('');
     const [searchNombre, setSearchNombre] = useState<string>('');
     const [selectedMunicipio, setSelectedMunicipio] = useState<string | undefined>(undefined);
-    const [selectedInstitucion, setSelectedInstitucion] = useState<string | undefined>(undefined);
-    const [selectedPrograma, setSelectedPrograma] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -45,9 +44,7 @@ const FiltroBeneficiarios: React.FC = () => {
             item.primer_apellido.toLowerCase().includes(normalizedPrimerApellido) &&
             item.segundo_apellido.toLowerCase().includes(normalizedSegundoApellido) &&
             item.nombre.toLowerCase().includes(normalizedNombre) &&
-            (selectedMunicipio ? item.beneficios?.some((beneficio) => beneficio.cve_municipio === selectedMunicipio) : true) &&
-            (selectedInstitucion ? item.beneficios?.some((beneficio) => beneficio.cve_dependencia === selectedInstitucion) : true) &&
-            (selectedPrograma ? item.beneficios?.some((beneficio) => beneficio.cve_programa === selectedPrograma) : true)
+            (selectedMunicipio ? item.beneficios?.some((beneficio) => beneficio.cve_municipio === selectedMunicipio) : true)
         );
 
         setFilteredData(filtered);
@@ -102,8 +99,6 @@ const FiltroBeneficiarios: React.FC = () => {
         setSearchSegundoApellido('');
         setSearchNombre('');
         setSelectedMunicipio(undefined);
-        setSelectedInstitucion(undefined);
-        setSelectedPrograma(undefined);
         setFilteredData(data);
     };
 
@@ -278,6 +273,7 @@ const FiltroBeneficiarios: React.FC = () => {
                         Limpiar filtros
                     </Button>
                 </div>
+                <Container sx={{mb: 2}}>
                 <Search
                     placeholder="Buscar por primer apellido"
                     value={searchPrimerApellido}
@@ -304,34 +300,10 @@ const FiltroBeneficiarios: React.FC = () => {
                     value={selectedMunicipio}
                 >
                     <Option value="017">Tepic</Option>
-                    <Option value="020">Charcuala</Option>
+                    <Option value="020">Tecuala</Option>
                 
                 </Select>
-                <Select
-                    placeholder="Selecciona institución"
-                    allowClear
-                    style={{ width: 200, marginRight: 8 }}
-                    onChange={(value) => setSelectedInstitucion(value)}
-                    value={selectedInstitucion}
-                >
-                    <Option value="03">Secretaria de Bienestar e Igualdad Sustantiva</Option>
-                    <Option value="14">Sistema Para el Desarrollo Integral de la Familia</Option>
-                    <Option value="21">Instituo Nayarita de la Juventud</Option>
-                    <Option value="33">Consejo Estatal para la Cultura y las Artes de Nayarit</Option>
-                    <Option value="22">Instituto Promotor de la Vivienda de Nayarit</Option>
-                   
-                </Select>
-                <Select
-                    placeholder="Selecciona programa"
-                    allowClear
-                    style={{ width: 200 }}
-                    onChange={(value) => setSelectedPrograma(value)}
-                    value={selectedPrograma}
-                >
-                    <Option value="001">Programa 1</Option>
-                    <Option value="002">Programa 2</Option>
-                    
-                </Select>
+                </Container>
                 <Table
                     columns={columns}
                     dataSource={filteredData.map(item => ({
