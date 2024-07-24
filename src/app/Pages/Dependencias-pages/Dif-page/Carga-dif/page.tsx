@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import {
   Button,
   Table,
@@ -22,11 +22,17 @@ import {
   Container,
   TablePagination,
 } from '@mui/material';
-import Navbar from '../Components/Navbar';
 import Footer from '../../../Components/Footer';
 import { Beneficiario } from '../../../Interfaces/beneficiarioTable';
+import Navbar from '../Components-dif/Navbar';
 
-const Carga = () => {
+const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
+  <span style={{ position: 'absolute', overflow: 'hidden', clip: 'rect(0 0 0 0)', height: '1px', width: '1px', margin: '-1px', padding: '0', border: '0' }}>
+    {children}
+  </span>
+);
+
+const CargaDif = () => {
   const { data: session, status } = useSession();
   const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -42,11 +48,6 @@ const Carga = () => {
   const cargaDeDatos = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (!file.name.endsWith('.xlsx')) {
-        setError('Archivo inválido. Por favor, seleccione un archivo .xlsx.');
-        return;
-      }
-  
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as ArrayBuffer;
@@ -91,7 +92,7 @@ const Carga = () => {
           range: 1,
           raw: false,
         }) as Beneficiario[];
-  
+
         jsonData.forEach((row: any) => {
           if (typeof row.cve_ent_fed === 'string') {
             row.cve_ent_fed = parseInt(row.cve_ent_fed, 10);
@@ -101,23 +102,22 @@ const Carga = () => {
           }
         });
         setBeneficiarios(jsonData);
-        setError(null); 
         console.log('datos', jsonData);
       };
       reader.readAsArrayBuffer(file);
     }
-  };  
+  };
 
   const registroDatos = async () => {
     try {
       if (!beneficiarios || beneficiarios.length === 0) {
         throw new Error('No hay datos de beneficiarios para enviar');
       }
-  
+
       setLoading(true);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sebien-pub/post-excel`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dif-pub/post-excel`,
         beneficiarios,
         {
           headers: {
@@ -126,33 +126,15 @@ const Carga = () => {
           },
         }
       );
-  
+
       console.log(response.data);
-      setLoading(false);
-      setSuccessDialogOpen(true);
+      setLoading(false); 
+      setSuccessDialogOpen(true); 
       setError(null);
       generatePDF(response.data);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response && axiosError.response.data) {
-          const responseData = axiosError.response.data;
-          if (typeof responseData === 'string') {
-            setError(`Error del servidor: ${responseData}`);
-          } else if (typeof responseData === 'object' && 'message' in responseData) {
-            setError(`Error del servidor: ${responseData.message}`);
-          } else {
-            setError('Error del servidor desconocido.');
-          }
-        } else {
-          setError('Error de conexión. Por favor, inténtelo de nuevo más tarde.');
-        }
-      } else if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('Error al procesar la solicitud. Por favor, inténtelo de nuevo.');
-      }
-  
+    } catch (error) {
+      console.error('Error al enviar datos:', error);
+      setError('Error al enviar sus datos, favor de revisar su archivo.');
       setLoading(false);
     }
   };
@@ -197,7 +179,7 @@ const Carga = () => {
             Importar Beneficiarios desde Excel
           </h1>
           <Container
-            maxWidth="xl"
+            maxWidth="lg"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -308,7 +290,7 @@ const Carga = () => {
                       {beneficiarios
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((beneficiario, index) => (
-                          <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#dacec0' } }}>
+                          <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#dacec0' }}}>
                             <TableCell sx={styles.tableCell2}>{index + 1 + page * rowsPerPage}</TableCell>
                             <TableCell sx={styles.tableCell2}>{beneficiario.curp}</TableCell>
                             <TableCell sx={styles.tableCell2}>{beneficiario.primer_apellido}</TableCell>
@@ -348,15 +330,15 @@ const Carga = () => {
                   </Table>
                 </TableContainer>
                 <Container>
-                  <TablePagination
-                    rowsPerPageOptions={[10, 25, 50]}
-                    component="div"
-                    count={beneficiarios.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 50]}
+                  component="div"
+                  count={beneficiarios.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
                 </Container>
               </>
             )}
@@ -379,7 +361,7 @@ const Carga = () => {
   );
 };
 
-export default Carga;
+export default CargaDif;
 
 const styles = {
   tableCell: {
@@ -392,8 +374,8 @@ const styles = {
   },
 
   tableCell2: {
-    borderBottom: '1px outset #d3d3d3',
-    borderRight: '1px outset #d3d3d3',
+    borderBottom: '1px outset #d3d3d3', 
+    borderRight: '1px outset #d3d3d3', 
     fontFamily: 'gothamrnd_medium'
   }
 };
