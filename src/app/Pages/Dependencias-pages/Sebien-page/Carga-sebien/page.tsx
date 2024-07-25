@@ -46,6 +46,8 @@ const Carga = () => {
         setError('Archivo inválido. Por favor, seleccione un archivo .xlsx.');
         return;
       }
+
+      //Validacion de excel
   
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -88,7 +90,7 @@ const Carga = () => {
             'cve_ent',
             'observaciones',
           ],
-          range: 1,
+          // range: 1,
           raw: false,
         }) as Beneficiario[];
   

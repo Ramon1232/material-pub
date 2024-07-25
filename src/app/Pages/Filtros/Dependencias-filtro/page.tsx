@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import { Beneficiario, Beneficio } from '../../Interfaces/interfaces';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
+import { Container } from '@mui/material';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -19,7 +20,6 @@ const FiltroDependencias: React.FC = () => {
     const [searchNombre, setSearchNombre] = useState<string>('');
     const [selectedMunicipio, setSelectedMunicipio] = useState<string | undefined>(undefined);
     const [selectedInstitucion, setSelectedInstitucion] = useState<string | undefined>(undefined);
-    const [selectedPrograma, setSelectedPrograma] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -46,8 +46,7 @@ const FiltroDependencias: React.FC = () => {
             item.segundo_apellido.toLowerCase().includes(normalizedSegundoApellido) &&
             item.nombre.toLowerCase().includes(normalizedNombre) &&
             (selectedMunicipio ? item.beneficios?.some((beneficio) => beneficio.cve_municipio === selectedMunicipio) : true) &&
-            (selectedInstitucion ? item.beneficios?.some((beneficio) => beneficio.cve_dependencia === selectedInstitucion) : true) &&
-            (selectedPrograma ? item.beneficios?.some((beneficio) => beneficio.cve_programa === selectedPrograma) : true)
+            (selectedInstitucion ? item.beneficios?.some((beneficio) => beneficio.cve_dependencia === selectedInstitucion) : true),
         );
 
         setFilteredData(filtered);
@@ -103,7 +102,6 @@ const FiltroDependencias: React.FC = () => {
         setSearchNombre('');
         setSelectedMunicipio(undefined);
         setSelectedInstitucion(undefined);
-        setSelectedPrograma(undefined);
         setFilteredData(data);
     };
 
@@ -278,39 +276,11 @@ const FiltroDependencias: React.FC = () => {
                         Limpiar filtros
                     </Button>
                 </div>
-                <Search
-                    placeholder="Buscar por primer apellido"
-                    value={searchPrimerApellido}
-                    onChange={(e) => setSearchPrimerApellido(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Search
-                    placeholder="Buscar por segundo apellido"
-                    value={searchSegundoApellido}
-                    onChange={(e) => setSearchSegundoApellido(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Search
-                    placeholder="Buscar por nombre"
-                    value={searchNombre}
-                    onChange={(e) => setSearchNombre(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Select
-                    placeholder="Selecciona municipio"
-                    allowClear
-                    style={{ width: 200, marginRight: 8 }}
-                    onChange={(value) => setSelectedMunicipio(value)}
-                    value={selectedMunicipio}
-                >
-                    <Option value="017">Tepic</Option>
-                    <Option value="020">Charcuala</Option>
-                    {/* Agrega más opciones según necesites */}
-                </Select>
+                <Container sx={{mb: 2}}>
                 <Select
                     placeholder="Selecciona institución"
                     allowClear
-                    style={{ width: 200, marginRight: 8 }}
+                    style={{ width: 400, marginRight: 8 }}
                     onChange={(value) => setSelectedInstitucion(value)}
                     value={selectedInstitucion}
                 >
@@ -321,17 +291,7 @@ const FiltroDependencias: React.FC = () => {
                     <Option value="22">Instituto Promotor de la Vivienda de Nayarit</Option>
                     {/* Agrega más opciones según necesites */}
                 </Select>
-                <Select
-                    placeholder="Selecciona programa"
-                    allowClear
-                    style={{ width: 200 }}
-                    onChange={(value) => setSelectedPrograma(value)}
-                    value={selectedPrograma}
-                >
-                    <Option value="001">Programa 1</Option>
-                    <Option value="002">Programa 2</Option>
-                    {/* Agrega más opciones según necesites */}
-                </Select>
+                </Container>
                 <Table
                     columns={columns}
                     dataSource={filteredData.map(item => ({

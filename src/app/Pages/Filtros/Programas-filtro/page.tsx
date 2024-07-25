@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import { Beneficiario, Beneficio } from '../../Interfaces/interfaces';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
+import { Container } from '@mui/material';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -278,60 +279,19 @@ const FiltroProgramas: React.FC = () => {
                         Limpiar filtros
                     </Button>
                 </div>
-                <Search
-                    placeholder="Buscar por primer apellido"
-                    value={searchPrimerApellido}
-                    onChange={(e) => setSearchPrimerApellido(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Search
-                    placeholder="Buscar por segundo apellido"
-                    value={searchSegundoApellido}
-                    onChange={(e) => setSearchSegundoApellido(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Search
-                    placeholder="Buscar por nombre"
-                    value={searchNombre}
-                    onChange={(e) => setSearchNombre(e.target.value)}
-                    style={{ width: 200, marginRight: 8 }}
-                />
-                <Select
-                    placeholder="Selecciona municipio"
-                    allowClear
-                    style={{ width: 200, marginRight: 8 }}
-                    onChange={(value) => setSelectedMunicipio(value)}
-                    value={selectedMunicipio}
-                >
-                    <Option value="017">Tepic</Option>
-                    <Option value="020">Charcuala</Option>
-                    {/* Agrega más opciones según necesites */}
-                </Select>
-                <Select
-                    placeholder="Selecciona institución"
-                    allowClear
-                    style={{ width: 200, marginRight: 8 }}
-                    onChange={(value) => setSelectedInstitucion(value)}
-                    value={selectedInstitucion}
-                >
-                    <Option value="03">Secretaria de Bienestar e Igualdad Sustantiva</Option>
-                    <Option value="14">Sistema Para el Desarrollo Integral de la Familia</Option>
-                    <Option value="21">Instituo Nayarita de la Juventud</Option>
-                    <Option value="33">Consejo Estatal para la Cultura y las Artes de Nayarit</Option>
-                    <Option value="22">Instituto Promotor de la Vivienda de Nayarit</Option>
-                    {/* Agrega más opciones según necesites */}
-                </Select>
+                <Container sx={{mb: 2}}>
                 <Select
                     placeholder="Selecciona programa"
                     allowClear
-                    style={{ width: 200 }}
+                    style={{ width: 300 }}
                     onChange={(value) => setSelectedPrograma(value)}
                     value={selectedPrograma}
                 >
-                    <Option value="001">Programa 1</Option>
-                    <Option value="002">Programa 2</Option>
+                    <Option value="S140">Cuidando tu Bienestar 2024</Option>
+                    <Option value="002">Programa para el cuidado 2024</Option>
                     {/* Agrega más opciones según necesites */}
                 </Select>
+                </Container>
                 <Table
                     columns={columns}
                     dataSource={filteredData.map(item => ({
