@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   Button,
   Table,
@@ -48,6 +48,13 @@ const CargaStjl = () => {
   const cargaDeDatos = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (!file.name.endsWith('.xlsx')) {
+        setError('Archivo inválido. Por favor, seleccione un archivo .xlsx.');
+        return;
+      }
+
+      //Validacion de excel
+  
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as ArrayBuffer;
@@ -92,7 +99,7 @@ const CargaStjl = () => {
           range: 1,
           raw: false,
         }) as Beneficiario[];
-
+  
         jsonData.forEach((row: any) => {
           if (typeof row.cve_ent_fed === 'string') {
             row.cve_ent_fed = parseInt(row.cve_ent_fed, 10);
@@ -102,11 +109,12 @@ const CargaStjl = () => {
           }
         });
         setBeneficiarios(jsonData);
+        setError(null); 
         console.log('datos', jsonData);
       };
       reader.readAsArrayBuffer(file);
     }
-  };
+  };  
 
   const registroDatos = async () => {
     try {
@@ -114,6 +122,11 @@ const CargaStjl = () => {
         throw new Error('No hay datos de beneficiarios para enviar');
       }
 
+      if (!session?.user?.token) {
+        setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
+        return;
+    }
+  
       setLoading(true);
 
       const response = await axios.post(
@@ -126,15 +139,33 @@ const CargaStjl = () => {
           },
         }
       );
-
+  
       console.log(response.data);
-      setLoading(false); 
-      setSuccessDialogOpen(true); 
+      setLoading(false);
+      setSuccessDialogOpen(true);
       setError(null);
       generatePDF(response.data);
-    } catch (error) {
-      console.error('Error al enviar datos:', error);
-      setError('Error al enviar sus datos, favor de revisar su archivo.');
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.data) {
+          const responseData = axiosError.response.data;
+          if (typeof responseData === 'string') {
+            setError(`Error del servidor: ${responseData}`);
+          } else if (typeof responseData === 'object' && 'message' in responseData) {
+            setError(`Error del servidor: ${responseData.message}`);
+          } else {
+            setError('Error del servidor desconocido.');
+          }
+        } else {
+          setError('Error de conexión. Por favor, inténtelo de nuevo más tarde.');
+        }
+      } else if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Error al procesar la solicitud. Por favor, inténtelo de nuevo.');
+      }
+  
       setLoading(false);
     }
   };
@@ -175,7 +206,7 @@ const CargaStjl = () => {
       <Navbar />
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
         <div style={{ padding: '1rem', maxWidth: 'calc(100vw - 2rem)', width: '100%', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
+          <h1 style={{ fontFamily: 'gothamrnd_bold', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
             Importar Beneficiarios desde Excel
           </h1>
           <Container
@@ -244,7 +275,7 @@ const CargaStjl = () => {
               )}
             </Button>
 
-            {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+            {error && <p style={{ color: 'red', textAlign: 'center', fontFamily: 'gothamrnd_medium' }}>{error}</p>}
             {beneficiarios.length > 0 && (
               <>
                 <TableContainer component={Paper} style={{ marginTop: '1rem' }}>

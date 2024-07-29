@@ -22,9 +22,9 @@ import {
 } from '@mui/material';
 import Footer from '../../../Components/Footer';
 import { Beneficiario } from '@/app/Pages/Interfaces/interfaces';
-import Navbar from '../Components-dif/Navbar';
+import Navbar from '../Components-iprovinay/Navbar';
 
-const VistaDif = () => {
+const VistaIprovinay = () => {
     const { data: session, status } = useSession();
     const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -32,20 +32,26 @@ const VistaDif = () => {
     const [successDialogOpen, setSuccessDialogOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
 
     const fetchData = async () => {
         if (!session?.user?.token) {
             setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
             return;
         }
+
         try {
             setLoading(true);
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dif-pub`, {
+            setNoDataMessage(null);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/iprovinay-pub`, {
                 headers: {
                     Authorization: `Bearer ${session?.user?.token}`,
                 },
             });
             setBeneficiarios(response.data);
+            if (response.data.length === 0) {
+                setNoDataMessage('No hay datos por mostrar.');
+            }
             console.log(response)
             setLoading(false);
         } catch (error) {
@@ -76,6 +82,16 @@ const VistaDif = () => {
                     <h1 style={{ fontFamily: 'gothamrnd_bold', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
                         Visualiza tus Beneficiarios
                     </h1>
+                    {noDataMessage && (
+                        <Typography variant="body1" color="textSecondary" align="center">
+                            {noDataMessage}
+                        </Typography>
+                    )}
+                    {error && (
+                        <Typography variant="body1" color="error" align="center">
+                            {error}
+                        </Typography>
+                    )}
                     <Container
                         maxWidth="xl"
                         style={{
@@ -226,7 +242,7 @@ const VistaDif = () => {
     );
 };
 
-export default VistaDif;
+export default VistaIprovinay;
 
 const styles = {
     tableCell: {

@@ -22,9 +22,9 @@ import {
 } from '@mui/material';
 import Footer from '../../../Components/Footer';
 import { Beneficiario } from '@/app/Pages/Interfaces/interfaces';
-import Navbar from '../Components-dif/Navbar';
+import Navbar from '../Components-stjl/Navbar';
 
-const VistaDif = () => {
+const CargaStjl = () => {
     const { data: session, status } = useSession();
     const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -34,13 +34,15 @@ const VistaDif = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const fetchData = async () => {
+
         if (!session?.user?.token) {
             setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
             return;
         }
+        
         try {
             setLoading(true);
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dif-pub`, {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/stjl-pub`, {
                 headers: {
                     Authorization: `Bearer ${session?.user?.token}`,
                 },
@@ -208,7 +210,7 @@ const VistaDif = () => {
                             </>
                         ) : (
                             <Typography variant="h6" style={{ marginTop: '2rem', textAlign: 'center', fontWeight: 'bold', color: 'black' }}>
-
+                                
                             </Typography>
                         )}
                         <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
@@ -226,22 +228,22 @@ const VistaDif = () => {
     );
 };
 
-export default VistaDif;
+export default CargaStjl;
 
 const styles = {
     tableCell: {
-        backgroundColor: '#60595D',
-        color: 'white',
-        fontSize: '1rem',
-        fontFamily: 'gothamrnd_medium',
-        borderRight: '1px solid #ffffff',
-        borderBottom: '2px solid #ffffff',
+      backgroundColor: '#60595D',
+      color: 'white',
+      fontSize: '1rem',
+      fontFamily: 'gothamrnd_medium',
+      borderRight: '1px solid #ffffff',
+      borderBottom: '2px solid #ffffff',
     },
-
+  
     tableCell2: {
-        borderBottom: '1px outset #d3d3d3',
-        borderRight: '1px outset #d3d3d3',
-        fontFamily: 'gothamrnd_medium'
+      borderBottom: '1px outset #d3d3d3',
+      borderRight: '1px outset #d3d3d3',
+      fontFamily: 'gothamrnd_medium'
     }
-};
-
+  };
+  

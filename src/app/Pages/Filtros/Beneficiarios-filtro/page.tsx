@@ -266,7 +266,7 @@ const FiltroBeneficiarios: React.FC = () => {
                     <Button type="primary" onClick={handleDownload} disabled={!filteredData.length} loading={loading}>
                         Descargar
                     </Button>
-                    <Button onClick={handleSearch} style={{ marginLeft: 8 }}>
+                    <Button onClick={handleSearch} style={{ marginLeft: 8}}>
                         Buscar
                     </Button>
                     <Button onClick={handleClearFilters} style={{ marginLeft: 8 }}>
@@ -299,9 +299,26 @@ const FiltroBeneficiarios: React.FC = () => {
                     onChange={(value) => setSelectedMunicipio(value)}
                     value={selectedMunicipio}
                 >
+                    <Option value="001">Acaponeta</Option>
+                    <Option value="002">Ahuacatlán</Option>
+                    <Option value="003">Amatlán de Cañas</Option>
+                    <Option value="004">Compostela</Option>
+                    <Option value="005">Huajicori</Option>
+                    <Option value="006">Ixtlán del Rio</Option>
+                    <Option value="007">Jala</Option>
+                    <Option value="008">Xalisco</Option>
+                    <Option value="009">Del Nayar</Option>
+                    <Option value="010">Rosamorada</Option>
+                    <Option value="011">Ruíz</Option>
+                    <Option value="012">San Blas</Option>
+                    <Option value="013">San Pedro Lagunillas</Option>
+                    <Option value="014">Santa María del Oro</Option>
+                    <Option value="015">Santigo Ixcuintla</Option>
+                    <Option value="016">Tecuala</Option>
                     <Option value="017">Tepic</Option>
-                    <Option value="020">Tecuala</Option>
-                
+                    <Option value="018">Tuxpan</Option>
+                    <Option value="019">La Yesca</Option>
+                    <Option value="020">Bahía de Banderas</Option>
                 </Select>
                 </Container>
                 <Table

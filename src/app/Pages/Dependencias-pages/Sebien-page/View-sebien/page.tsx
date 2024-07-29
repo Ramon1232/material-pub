@@ -34,6 +34,11 @@ const Carga = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const fetchData = async () => {
+        if (!session?.user?.token) {
+            setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
+            return;
+        }
+
         try {
             setLoading(true);
             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sebien-pub`, {
@@ -42,7 +47,7 @@ const Carga = () => {
                 },
             });
             setBeneficiarios(response.data);
-            console.log(response)
+            console.log(session.user.token)
             setLoading(false);
         } catch (error) {
             console.error('Error al obtener datos:', error);
@@ -69,7 +74,7 @@ const Carga = () => {
             <Navbar />
             <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <div style={{ padding: '1rem', maxWidth: 'calc(100vw - 2rem)', width: '100%', margin: '0 auto' }}>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
+                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold' }}>
                         Visualiza tus Beneficiarios
                     </h1>
                     <Container
@@ -102,7 +107,7 @@ const Carga = () => {
                             }}>
                             visualizar beneficiarios
                         </Button>
-                        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+                        {error && <p style={{ color: 'red', textAlign: 'center', fontFamily: 'gothamrnd_medium' }}>{error}</p>}
                         {beneficiarios.length > 0 ? (
                             <>
                                 <TableContainer component={Paper} style={{ marginTop: '1rem' }}>
@@ -204,7 +209,7 @@ const Carga = () => {
                             </>
                         ) : (
                             <Typography variant="h6" style={{ marginTop: '2rem', textAlign: 'center', fontWeight: 'bold', color: 'black' }}>
-                                
+
                             </Typography>
                         )}
                         <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
@@ -226,18 +231,18 @@ export default Carga;
 
 const styles = {
     tableCell: {
-      backgroundColor: '#60595D',
-      color: 'white',
-      fontSize: '1rem',
-      fontFamily: 'gothamrnd_medium',
-      borderRight: '1px solid #ffffff',
-      borderBottom: '2px solid #ffffff',
+        backgroundColor: '#60595D',
+        color: 'white',
+        fontSize: '1rem',
+        fontFamily: 'gothamrnd_medium',
+        borderRight: '1px solid #ffffff',
+        borderBottom: '2px solid #ffffff',
     },
-  
+
     tableCell2: {
-      borderBottom: '1px outset #d3d3d3',
-      borderRight: '1px outset #d3d3d3',
-      fontFamily: 'gothamrnd_medium'
+        borderBottom: '1px outset #d3d3d3',
+        borderRight: '1px outset #d3d3d3',
+        fontFamily: 'gothamrnd_medium'
     }
-  };
-  
+};
+

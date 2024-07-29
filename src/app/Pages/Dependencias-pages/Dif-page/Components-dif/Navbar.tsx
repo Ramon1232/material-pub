@@ -69,9 +69,15 @@ const Navbar: React.FC = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Inicio</MenuItem>
-              <MenuItem onClick={handleClose}>Carga de Documentos</MenuItem>
-              <MenuItem onClick={handleClose}>Vizualización de Documentos Cargados</MenuItem>
+              <Link href={'/Pages/Dependencias-pages/Dif-page'}>
+                <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Inicio</MenuItem>
+              </Link>
+              <Link href={'/Pages/Dependencias-pages/Dif-page/Carga-dif'}>
+                <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Carga de Documentos</MenuItem>
+              </Link>
+              <Link href={'/Pages/Dependencias-pages/Dif-page/View-dif'}>
+                <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Vizualización de Documentos Cargados</MenuItem>
+              </Link>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>

@@ -22,11 +22,11 @@ import {
   Container,
   TablePagination,
 } from '@mui/material';
-import Navbar from '../Components/Navbar';
 import Footer from '../../../Components/Footer';
 import { Beneficiario } from '../../../Interfaces/beneficiarioTable';
+import Navbar from '../Components-injuve/Navbar';
 
-const Carga = () => {
+const CargaInjuve = () => {
   const { data: session, status } = useSession();
   const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -39,41 +39,6 @@ const Carga = () => {
     return <p>Loading...</p>;
   }
 
-  const expectedHeaders = [
-    "CURP",
-    "Primer Apellido",
-    "Segundo Apellido",
-    "Nombre",
-    "Fecha Nacimiento",
-    "Cve Ent Fed Nac",
-    "Sexo",
-    "Discapacidad",
-    "Indigena",
-    "Cve Civil",
-    "Cve Dependencia",
-    "Cve Institucion",
-    "Cve Programa",
-    "Cve Intra-Programa",
-    "Cve Ent Fed",
-    "Cve Municipio",
-    "Cve Localidad",
-    "Fecha Beneficio",
-    "Cve Tipo Beneficiario",
-    "Cve Tipo Beneficio",
-    "Cantidad Apoyo",
-    "Tipo Vial",
-    "Nom Vial",
-    "Num Int num",
-    "Num Int alf",
-    "Nom Loc",
-    "Cve Loc",
-    "Nom Mun",
-    "Cve Mun",
-    "Nom Ent",
-    "Cve Ent",
-    "Observaciones",
-  ];
-
   const cargaDeDatos = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -83,7 +48,7 @@ const Carga = () => {
       }
 
       //Validacion de excel
-  
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as ArrayBuffer;
@@ -128,7 +93,7 @@ const Carga = () => {
           range: 1,
           raw: false,
         }) as Beneficiario[];
-  
+
         jsonData.forEach((row: any) => {
           if (typeof row.cve_ent_fed === 'string') {
             row.cve_ent_fed = parseInt(row.cve_ent_fed, 10);
@@ -138,12 +103,12 @@ const Carga = () => {
           }
         });
         setBeneficiarios(jsonData);
-        setError(null); 
+        setError(null);
         console.log('datos', jsonData);
       };
       reader.readAsArrayBuffer(file);
     }
-  };  
+  };
 
   const registroDatos = async () => {
     try {
@@ -155,11 +120,11 @@ const Carga = () => {
         setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
         return;
       }
-  
+
       setLoading(true);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sebien-pub/post-excel`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/injuve-pub/post-excel`,
         beneficiarios,
         {
           headers: {
@@ -168,7 +133,7 @@ const Carga = () => {
           },
         }
       );
-  
+
       console.log(response.data);
       setLoading(false);
       setSuccessDialogOpen(true);
@@ -194,7 +159,7 @@ const Carga = () => {
       } else {
         setError('Error al procesar la solicitud. Por favor, inténtelo de nuevo.');
       }
-  
+
       setLoading(false);
     }
   };
@@ -235,11 +200,11 @@ const Carga = () => {
       <Navbar />
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
         <div style={{ padding: '1rem', maxWidth: 'calc(100vw - 2rem)', width: '100%', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold'}}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold' }}>
             Importar Beneficiarios desde Excel
           </h1>
           <Container
-            maxWidth="xl"
+            maxWidth="lg"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -421,7 +386,7 @@ const Carga = () => {
   );
 };
 
-export default Carga;
+export default CargaInjuve;
 
 const styles = {
   tableCell: {

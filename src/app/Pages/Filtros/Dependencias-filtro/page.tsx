@@ -289,6 +289,7 @@ const FiltroDependencias: React.FC = () => {
                     <Option value="21">Instituo Nayarita de la Juventud</Option>
                     <Option value="33">Consejo Estatal para la Cultura y las Artes de Nayarit</Option>
                     <Option value="22">Instituto Promotor de la Vivienda de Nayarit</Option>
+                    <Option value="17">Secretaria del Trabajo y Justicia Laboral</Option>
                     {/* Agrega más opciones según necesites */}
                 </Select>
                 </Container>

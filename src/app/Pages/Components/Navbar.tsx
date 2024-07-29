@@ -80,12 +80,20 @@ const Navbar: React.FC = () => {
                                 >
                                     <Typography color="#60595D" sx={{ mt: 8, mb: 4, fontFamily: 'gothamrnd_medium' }}>
                                         <Link href={'/Pages/Home'}>
-                                            <MenuItem onClick={handleDrawerClose}>Inicio</MenuItem>
+                                            <MenuItem onClick={handleDrawerClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Inicio</MenuItem>
                                         </Link>
-                                        <MenuItem onClick={handleDrawerClose}>Normativa</MenuItem>
-                                        <MenuItem onClick={handleDrawerClose}>Descripción del padrón</MenuItem>
-                                        <MenuItem onClick={handleDrawerClose}>¿Quiénes participan?</MenuItem>
-                                        <MenuItem onClick={handleDrawerClose}>Formato del padrón único</MenuItem>
+                                        <Link href={'/Pages/Navbar-pages/Normativa'}>
+                                            <MenuItem onClick={handleDrawerClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Normativa</MenuItem>
+                                        </Link>
+                                        <Link href={'/Pages/Navbar-pages/Descripcion'}>
+                                            <MenuItem onClick={handleDrawerClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Descripción del padrón</MenuItem>
+                                        </Link>
+                                        <Link href={'/Pages/Navbar-pages/Participantes'}>
+                                            <MenuItem onClick={handleDrawerClose} sx={{ color: '#60595D', textDecoration: 'none' }}>¿Quiénes participan?</MenuItem>
+                                        </Link>
+                                        <Link href={'/Pages/Navbar-pages/Formato'}>
+                                            <MenuItem onClick={handleDrawerClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Formato del padrón único</MenuItem>
+                                        </Link>
                                     </Typography>
                                 </Box>
                             </Drawer>

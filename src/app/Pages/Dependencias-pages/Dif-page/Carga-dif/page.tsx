@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   Button,
   Table,
@@ -48,6 +48,13 @@ const CargaDif = () => {
   const cargaDeDatos = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (!file.name.endsWith('.xlsx')) {
+        setError('Archivo inválido. Por favor, seleccione un archivo .xlsx.');
+        return;
+      }
+
+      //Validacion de excel
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as ArrayBuffer;
@@ -102,6 +109,7 @@ const CargaDif = () => {
           }
         });
         setBeneficiarios(jsonData);
+        setError(null);
         console.log('datos', jsonData);
       };
       reader.readAsArrayBuffer(file);
@@ -112,6 +120,11 @@ const CargaDif = () => {
     try {
       if (!beneficiarios || beneficiarios.length === 0) {
         throw new Error('No hay datos de beneficiarios para enviar');
+      }
+
+      if (!session?.user?.token) {
+        setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
+        return;
       }
 
       setLoading(true);
@@ -128,13 +141,31 @@ const CargaDif = () => {
       );
 
       console.log(response.data);
-      setLoading(false); 
-      setSuccessDialogOpen(true); 
+      setLoading(false);
+      setSuccessDialogOpen(true);
       setError(null);
       generatePDF(response.data);
-    } catch (error) {
-      console.error('Error al enviar datos:', error);
-      setError('Error al enviar sus datos, favor de revisar su archivo.');
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.data) {
+          const responseData = axiosError.response.data;
+          if (typeof responseData === 'string') {
+            setError(`Error del servidor: ${responseData}`);
+          } else if (typeof responseData === 'object' && 'message' in responseData) {
+            setError(`Error del servidor: ${responseData.message}`);
+          } else {
+            setError('Error del servidor desconocido.');
+          }
+        } else {
+          setError('Error de conexión. Por favor, inténtelo de nuevo más tarde.');
+        }
+      } else if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Error al procesar la solicitud. Por favor, inténtelo de nuevo.');
+      }
+
       setLoading(false);
     }
   };
@@ -175,7 +206,7 @@ const CargaDif = () => {
       <Navbar />
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
         <div style={{ padding: '1rem', maxWidth: 'calc(100vw - 2rem)', width: '100%', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold' }}>
             Importar Beneficiarios desde Excel
           </h1>
           <Container
@@ -244,7 +275,7 @@ const CargaDif = () => {
               )}
             </Button>
 
-            {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+            {error && <p style={{ color: 'red', textAlign: 'center', fontFamily: 'gothamrnd_medium' }}>{error}</p>}
             {beneficiarios.length > 0 && (
               <>
                 <TableContainer component={Paper} style={{ marginTop: '1rem' }}>
@@ -290,7 +321,7 @@ const CargaDif = () => {
                       {beneficiarios
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((beneficiario, index) => (
-                          <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#dacec0' }}}>
+                          <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#dacec0' } }}>
                             <TableCell sx={styles.tableCell2}>{index + 1 + page * rowsPerPage}</TableCell>
                             <TableCell sx={styles.tableCell2}>{beneficiario.curp}</TableCell>
                             <TableCell sx={styles.tableCell2}>{beneficiario.primer_apellido}</TableCell>
@@ -330,15 +361,15 @@ const CargaDif = () => {
                   </Table>
                 </TableContainer>
                 <Container>
-                <TablePagination
-                  rowsPerPageOptions={[10, 25, 50]}
-                  component="div"
-                  count={beneficiarios.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                  <TablePagination
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={beneficiarios.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
                 </Container>
               </>
             )}
@@ -374,8 +405,8 @@ const styles = {
   },
 
   tableCell2: {
-    borderBottom: '1px outset #d3d3d3', 
-    borderRight: '1px outset #d3d3d3', 
+    borderBottom: '1px outset #d3d3d3',
+    borderRight: '1px outset #d3d3d3',
     fontFamily: 'gothamrnd_medium'
   }
 };

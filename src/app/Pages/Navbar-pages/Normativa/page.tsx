@@ -10,10 +10,10 @@ const Page = () => {
             <Container sx={{ maxWidth: '80%', paddingTop: '2rem', paddingBottom: '2rem' }}>
                 <Grid container justifyContent="center">
                     <Grid item xs={12}>
-                        <Typography variant="h2" align="center" gutterBottom fontFamily={'gothamrnd_bold'}>
+                        <Typography variant="h3" align="center" gutterBottom fontFamily={'gothamrnd_bold'} color={'#DACEC0'}>
                             Qué es la Normativa
                         </Typography>
-                        <Typography variant="body1" align="justify" fontFamily={'gothamrnd_medium'}>
+                        <Typography variant="h6" align="justify" fontFamily={'gothamrnd_medium'} color={'GrayText'}>
                             La normativa se refiere a un conjunto de reglas, leyes, disposiciones o regulaciones
                             establecidas por una autoridad competente para regular determinadas actividades,
                             comportamientos o prácticas dentro de una sociedad o institución. Su propósito principal

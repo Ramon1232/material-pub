@@ -1,15 +1,16 @@
 'use client'
-// pages/register.tsx
 import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 
 interface FormData {
   name: string;
   lastname: string;
   email: string;
   password: string;
+  role: string;
   number: string;
+  dependencia: string;
 }
 
 const Register = () => {
@@ -18,11 +19,18 @@ const Register = () => {
     lastname: '',
     email: '',
     password: '',
+    role: '',
     number: '',
+    dependencia: '',
   });
   const [message, setMessage] = useState<string>('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = (e: SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -47,6 +55,7 @@ const Register = () => {
           flexDirection: 'column',
           alignItems: 'center',
           mt: 8,
+          mb: 16
         }}
       >
         <Typography component="h1" variant="h5">
@@ -94,6 +103,20 @@ const Register = () => {
             required
             margin="normal"
           />
+          <FormControl fullWidth required margin="normal">
+            <InputLabel id="role-label">Rol de usuario</InputLabel>
+            <Select
+              labelId="role-label"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleSelectChange}
+              label="Rol de usuario"
+            >
+              <MenuItem value="operativo">OPERATIVO</MenuItem>
+              <MenuItem value="responsable">RESPONSABLE</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             label="Número"
             name="number"
@@ -103,6 +126,24 @@ const Register = () => {
             required
             margin="normal"
           />
+          <FormControl fullWidth required margin="normal">
+            <InputLabel id="dependencia-label">Dependencia</InputLabel>
+            <Select
+              labelId="dependencia-label"
+              id="dependencia"
+              name="dependencia"
+              value={formData.dependencia}
+              onChange={handleSelectChange}
+              label="Dependencia"
+            >
+              <MenuItem value="dif">Sistema Para el Desarrollo Integral de la Familia</MenuItem>
+              <MenuItem value="sebien">Secretaría de Bienestar e Igualdad Sustantiva</MenuItem>
+              <MenuItem value="stjl">Secretaría del Trabajo y Justicia Laboral</MenuItem>
+              <MenuItem value="injuve">Instituto Nayarita de la Juventud</MenuItem>
+              <MenuItem value="cecan">Consejo Estatal para la Cultura y las Artes de Nayarit</MenuItem>
+              <MenuItem value="iprovinay">Instituto Promotor de la Vivienda de Nayarit</MenuItem>
+            </Select>
+          </FormControl>
           <Button
             type="submit"
             fullWidth

@@ -5,12 +5,12 @@ import Footer from '../../Components/Footer';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; 
 import SessionAuthProvider from '../../../context/SessionAuthProvider'; 
-import Navbar from './Components-stjl/Navbar';
-import Contenido from './Components-stjl/Contenido';
+import Navbar from './Components-cecan/Navbar';
+import Contenido from './Components-cecan/Contenido';
 
 const Page = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+//   const { data: session, status } = useSession();
+//   const router = useRouter();
 
 //   React.useEffect(() => {
 //     if (!session) {
@@ -28,10 +28,10 @@ const Page = () => {
         <Navbar />
         <Container maxWidth="md">
           <Contenido 
-            imageUrl="/STJL.png"
+            imageUrl="/CECAN.png"
             altText="Descripción de la imagen"
             text="Padrón Único de Beneficiarios"
-            text1="Secretaría del Trabajo y Justicia Laboral"
+            text1="Consejo Estatal para la Cultura y las Artes de Nayarit"
             text2="Enlace Operativo"
           />
         </Container>
@@ -42,5 +42,3 @@ const Page = () => {
 }
 
 export default Page;
-
-

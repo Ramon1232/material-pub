@@ -69,13 +69,13 @@ const Navbar: React.FC = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <Link href={'/Pages/Dependencias-pages/Sebien-page'}>
+              <Link href={'/Pages/Dependencias-pages/Cecan-page'}>
                 <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Inicio</MenuItem>
               </Link>
-              <Link href={'/Pages/Dependencias-pages/Sebien-page/Carga-sebien'}>
+              <Link href={'/Pages/Dependencias-pages/Cecan-page/Carga-cecan'}>
                 <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Carga de Documentos</MenuItem>
               </Link>
-              <Link href={'/Pages/Dependencias-pages/Sebien-page/View-sebien'}>
+              <Link href={'/Pages/Dependencias-pages/Cecan-page/View-cecan'}>
                 <MenuItem onClick={handleClose} sx={{ color: '#60595D', textDecoration: 'none' }}>Vizualización de Documentos Cargados</MenuItem>
               </Link>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
           </div>
         ) : (
           <Box display="flex" justifyContent="center" alignItems="center" width="100%" sx={{ display: 'flex', gap: 6 }}>
-            <Link href="/Pages/Dependencias-pages/Sebien-page">
+            <Link href="/Pages/Dependencias-pages/Cecan-page">
               <Button
                 sx={{
                   textDecoration: 'none',
@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
                 Inicio
               </Button>
             </Link>
-            <Link href="/Pages/Dependencias-pages/Sebien-page/Carga-sebien">
+            <Link href="/Pages/Dependencias-pages/Cecan-page/Carga-cecan">
               <Button
                 sx={{
                   textDecoration: 'none',
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
                 Carga de Documentos
               </Button>
             </Link>
-            <Link href="/Pages/Dependencias-pages/Sebien-page/View-sebien">
+            <Link href="/Pages/Dependencias-pages/Cecan-page/View-cecan">
               <Button
                 sx={{
                   textDecoration: 'none',
