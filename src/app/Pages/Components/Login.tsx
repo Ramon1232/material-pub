@@ -32,32 +32,63 @@ const LoginForm: React.FC = () => {
 
       const session = await getSession();
       const dependencia = session?.user?.dependencia;
+      const role = session?.user.role;
+
+      console.log('este es el rol jaja --->', role)
 
       if (response?.error) {
         setApiError(response.error);
       } else {
-        switch (dependencia) {
-          case 'sebien':
-            router.push('/Pages/Dependencias-pages/Sebien-page');
-            break;
-          case 'injuve':
-            router.push('/Pages/Dependencias-pages/Injuve-page');
-            break;
-          case 'dif':
-            router.push('/Pages/Dependencias-pages/Dif-page');
-            break;
-          case 'iprovinay':
-            router.push('/Pages/Dependencias-pages/Iprovinay-page');
-            break;
-          case 'stjl':
-            router.push('/Pages/Dependencias-pages/Stjl-page');
-            break;
-          case 'cecan':
-            router.push('/Pages/Dependencias-pages/Cecan-page');
-            break;
-          default:
-            router.push('/Pages/Home');
-            break;
+        if (role === 'operativo') {
+          switch (dependencia) {
+            case 'sebien':
+              router.push('/Pages/Dependencias-pages/Sebien-page');
+              break;
+            case 'injuve':
+              router.push('/Pages/Dependencias-pages/Injuve-page');
+              break;
+            case 'dif':
+              router.push('/Pages/Dependencias-pages/Dif-page');
+              break;
+            case 'iprovinay':
+              router.push('/Pages/Dependencias-pages/Iprovinay-page');
+              break;
+            case 'stjl':
+              router.push('/Pages/Dependencias-pages/Stjl-page');
+              break;
+            case 'cecan':
+              router.push('/Pages/Dependencias-pages/Cecan-page');
+              break;
+            default:
+              router.push('/Pages/Home');
+              break;
+          }
+        } else {
+          if(role !== 'operativo'){
+            switch (dependencia) {
+              case 'sebien':
+                router.push('/Pages/Home');
+                break;
+              case 'injuve':
+                router.push('/Pages/Home');
+                break;
+              case 'dif':
+                router.push('/Pages/Home');
+                break;
+              case 'iprovinay':
+                router.push('/Pages/Home');
+                break;
+              case 'stjl':
+                router.push('/Pages/Home');
+                break;
+              case 'cecan':
+                router.push('/Pages/Home');
+                break;
+              default:
+                router.push('/Pages/Home');
+                break;
+            }
+          }
         }
       }
     } catch (error: any) {

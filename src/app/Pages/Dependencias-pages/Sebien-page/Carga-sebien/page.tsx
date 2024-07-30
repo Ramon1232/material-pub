@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import axios, { AxiosError } from 'axios';
@@ -83,7 +83,7 @@ const Carga = () => {
       }
 
       //Validacion de excel
-  
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as ArrayBuffer;
@@ -128,7 +128,7 @@ const Carga = () => {
           range: 1,
           raw: false,
         }) as Beneficiario[];
-  
+
         jsonData.forEach((row: any) => {
           if (typeof row.cve_ent_fed === 'string') {
             row.cve_ent_fed = parseInt(row.cve_ent_fed, 10);
@@ -138,14 +138,18 @@ const Carga = () => {
           }
         });
         setBeneficiarios(jsonData);
-        setError(null); 
+        setError(null);
         console.log('datos', jsonData);
       };
       reader.readAsArrayBuffer(file);
     }
-  };  
+  };
 
   const registroDatos = async () => {
+    const session = await getSession();
+    const dependencia = session?.user?.dependencia;
+    const role = session?.user?.role;
+
     try {
       if (!beneficiarios || beneficiarios.length === 0) {
         throw new Error('No hay datos de beneficiarios para enviar');
@@ -155,7 +159,17 @@ const Carga = () => {
         setError('Autenticacion no encontrada, vuelve a iniciar sesión.');
         return;
       }
-  
+
+      if (role !== 'operativo') {
+        setError('No tienes permisos suficientes para realizar esta acción.');
+        return;
+      }
+
+      if (dependencia !== 'sebien') {
+        setError('Tu dependencia no está autorizada para realizar esta acción.');
+        return;
+      }
+
       setLoading(true);
 
       const response = await axios.post(
@@ -168,7 +182,7 @@ const Carga = () => {
           },
         }
       );
-  
+
       console.log(response.data);
       setLoading(false);
       setSuccessDialogOpen(true);
@@ -194,7 +208,7 @@ const Carga = () => {
       } else {
         setError('Error al procesar la solicitud. Por favor, inténtelo de nuevo.');
       }
-  
+
       setLoading(false);
     }
   };
@@ -235,7 +249,7 @@ const Carga = () => {
       <Navbar />
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
         <div style={{ padding: '1rem', maxWidth: 'calc(100vw - 2rem)', width: '100%', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold'}}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center', fontFamily: 'gothamrnd_bold' }}>
             Importar Beneficiarios desde Excel
           </h1>
           <Container
