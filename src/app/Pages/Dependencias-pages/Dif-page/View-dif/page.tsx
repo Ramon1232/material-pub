@@ -32,6 +32,7 @@ const VistaDif = () => {
     const [successDialogOpen, setSuccessDialogOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
 
     const fetchData = async () => {
         if (!session?.user?.token) {
@@ -40,12 +41,16 @@ const VistaDif = () => {
         }
         try {
             setLoading(true);
+            setNoDataMessage(null);
             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dif-pub`, {
                 headers: {
                     Authorization: `Bearer ${session?.user?.token}`,
                 },
             });
             setBeneficiarios(response.data);
+            if (response.data.length === 0) {
+                setNoDataMessage('No hay datos por mostrar.');
+            }
             console.log(response)
             setLoading(false);
         } catch (error) {
@@ -76,6 +81,11 @@ const VistaDif = () => {
                     <h1 style={{ fontFamily: 'gothamrnd_bold', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
                         Visualiza tus Beneficiarios
                     </h1>
+                    {noDataMessage && (
+                        <Typography variant="body1" color="textSecondary" align="center">
+                            {noDataMessage}
+                        </Typography>
+                    )}
                     <Container
                         maxWidth="xl"
                         style={{

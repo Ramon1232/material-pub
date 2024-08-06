@@ -14,7 +14,7 @@ const Page = () => {
                             Descripción
                         </Typography>
                         <Typography variant="h6" align="justify" fontFamily={'gothamrnd_medium'} color={'GrayText'}>
-                            Descripcion por parte de chuyito
+                            
                         </Typography>
                     </Grid>
                 </Grid>
