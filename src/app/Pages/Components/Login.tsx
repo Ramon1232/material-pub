@@ -34,8 +34,6 @@ const LoginForm: React.FC = () => {
       const dependencia = session?.user?.dependencia;
       const role = session?.user.role;
 
-      console.log('este es el rol jaja --->', role)
-
       if (response?.error) {
         setApiError(response.error);
       } else {

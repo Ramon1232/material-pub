@@ -25,6 +25,7 @@ import {
 import Footer from '../../../Components/Footer';
 import { Beneficiario } from '../../../Interfaces/beneficiarioTable';
 import Navbar from '../Components-cecan/Navbar';
+import { logo64, logopub64 } from '../../Sebien-page/Carga-sebien/imagenData';
 
 const CargaCecan = () => {
   const { data: session, status } = useSession();
@@ -165,21 +166,64 @@ const CargaCecan = () => {
   };
 
   const generatePDF = (result: any) => {
-    const doc = new jsPDF();
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+
     const currentDate = new Date();
     const date = currentDate.toLocaleDateString();
     const time = currentDate.toLocaleTimeString();
     const numBeneficiarios = result.length;
 
-    // Título y detalles del documento
-    doc.setFontSize(16);
-    doc.text('Acuse de Registro de Beneficiarios', 10, 10);
-    doc.setFontSize(12);
-    doc.text(`Fecha de Registro: ${date}`, 10, 20);
-    doc.text(`Hora de Registro: ${time}`, 10, 30);
-    doc.text(`Número de Beneficiarios Registrados: ${numBeneficiarios}`, 10, 40);
+    const primerBeneficiario = result[0] || {};
+    const claveDependencia = primerBeneficiario.cve_dependencia || 'No disponible';
+    const clavePrograma = primerBeneficiario.cve_programa || 'No disponible';
 
-    doc.save('acuse_de_registro.pdf');
+    const margin = 1;
+    const imgWidth = 2;
+    const imgWidthPub = 1;
+    const imgHeight = 0;
+    const imgSpacing = 4;
+
+    const logoX = margin;
+    const logopubX = margin + imgWidthPub + imgSpacing;
+    const titleY = margin + imgHeight + 0.5;
+    const contentY = titleY + 0.5;
+    const footerY = 7;
+    const contMargin = 2.5;
+
+    doc.addImage(logo64, 'PNG', logoX, margin, imgWidth, imgHeight);
+    doc.addImage(logopub64, 'PNG', logopubX, margin, imgWidthPub, imgHeight);
+
+    doc.setFontSize(20);
+    doc.setTextColor(121, 20, 42);
+    doc.text('Acuse de Registro de Beneficiarios', 2, 2.5);
+
+    doc.setFontSize(12);
+    doc.setTextColor(51, 50, 48);
+    doc.text(`Fecha de Registro: ${date}`, contMargin, 3.5);
+    doc.text('Dependencia: Consejo Estatal para la Cultura y las Artes de Nayarit.', contMargin, 4.0);
+    doc.text(`Nombre del Archivo: ${claveDependencia}/${clavePrograma}/2024`, contMargin, 4.5);
+    doc.text(`Hora de Registro: ${time}`, contMargin, 5.0);
+    doc.text(`Número de Beneficiarios Registrados: ${numBeneficiarios}`, contMargin, 5.5);
+
+    doc.setFontSize(12);
+    doc.text('Revisa y Valida', 2.05, 7);
+    doc.setFontSize(14);
+    doc.setTextColor(121, 20, 42);
+    doc.text('Enlace Responsable', 1.8, 7.5);
+    doc.setFontSize(11);
+    doc.setTextColor(51, 50, 48);
+    doc.text('(Nombre, Firma, Cargo y' + '\n' + ' Dependencia, Entidad o' + '\n' + '        Ayuntamiento)', 1.8, 7.7);
+
+    doc.setFontSize(12);
+    doc.text('Revisa y Valida', margin + 4, 7);
+    doc.setFontSize(14);
+    doc.setTextColor(121, 20, 42);
+    doc.text('Enlace Responsable', margin + 3.8, 7.5);
+    doc.setFontSize(11);
+    doc.setTextColor(51, 50, 48);
+    doc.text('(Nombre, Firma, Cargo y' + '\n' + ' Dependencia, Entidad o' + '\n' + '        Ayuntamiento)', 4.8, 7.7); // Detalles del responsable
+
+    doc.save('acuse_de_registro_CECAN.pdf');
   };
 
   const handleCloseSuccessDialog = () => {
