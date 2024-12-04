@@ -13,8 +13,39 @@ const Page = () => {
                         <Typography variant="h3" align="center" gutterBottom fontFamily={'gothamrnd_bold'} color={'#DACEC0'}>
                             Formato del padrón unico de beneficiarios
                         </Typography>
-                        <Typography variant="h6" align="justify" fontFamily={'gothamrnd_medium'} color={'GrayText'}>
-
+                        <Typography variant="h6" align="center" fontFamily={'gothamrnd_medium'} color={'GrayText'} >
+                        De acuerdo con la Ley de Transparencia, el Padrón Único de Beneficiarios se presenta en el siguiente formato.
+                            <br />
+                            <br />
+                            - Primer Apellido 
+                            <br />
+                            - Segundo Apellido
+                            <br />
+                            - Nombre
+                            <br />
+                            - Sexo
+                            <br />
+                            - CVE dependencia
+                            <br />
+                            - Institución
+                            <br />
+                            - Programa 
+                            <br />
+                            - Intra programa 
+                            <br />
+                            - Entidad federativa 
+                            <br />
+                            - Municipio 
+                            <br />
+                            - Localidad 
+                            <br />
+                            - Fecha de beneficio 
+                            <br />
+                            - Tipo de beneficiario 
+                            <br />
+                            - Tipo de beneficio 
+                            <br />
+                            - Cantidad de apoyo
                         </Typography>
                     </Grid>
                 </Grid>
