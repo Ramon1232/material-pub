@@ -224,7 +224,7 @@ const CargaDif = () => {
     doc.text('Revisa y Valida', margin + 4, 7);
     doc.setFontSize(14);
     doc.setTextColor(121, 20, 42);
-    doc.text('Enlace Responsable', margin + 3.8, 7.5);
+    doc.text('Enlace Operativo', margin + 3.8, 7.5);
     doc.setFontSize(11);
     doc.setTextColor(51, 50, 48);
     doc.text('(Nombre, Firma, Cargo y' + '\n' + ' Dependencia, Entidad o' + '\n' + '        Ayuntamiento)', 4.8, 7.7); // Detalles del responsable
