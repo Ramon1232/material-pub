@@ -201,27 +201,26 @@ const CargaCecan = () => {
     doc.setTextColor(51, 50, 48);
     doc.text(`Fecha de Registro: ${date}`, contMargin, 3.5);
     doc.text('Dependencia: Consejo Estatal para la Cultura y las Artes de Nayarit.', contMargin, 4.0);
-    doc.text(`Nombre del Archivo: ${claveDependencia}/${clavePrograma}/2024`, contMargin, 4.5);
-    doc.text(`Hora de Registro: ${time}`, contMargin, 5.0);
-    doc.text(`Número de Beneficiarios Registrados: ${numBeneficiarios}`, contMargin, 5.5);
+    doc.text(`Hora de Registro: ${time}`, contMargin, 4.5);
+    doc.text(`Número de Beneficiarios Registrados: ${numBeneficiarios}`, contMargin, 5.0);
 
     doc.setFontSize(12);
     doc.text('Revisa y Valida', 2.05, 7);
     doc.setFontSize(14);
     doc.setTextColor(121, 20, 42);
-    doc.text('Enlace Responsable', 1.8, 7.5);
+    doc.text('  Enlace Operativo', 1.8, 8.5);
     doc.setFontSize(11);
     doc.setTextColor(51, 50, 48);
-    doc.text('(Nombre, Firma, Cargo y' + '\n' + ' Dependencia, Entidad o' + '\n' + '        Ayuntamiento)', 1.8, 7.7);
+    doc.text('      Nombre y Firma', 1.8, 8.7);
 
     doc.setFontSize(12);
     doc.text('Revisa y Valida', margin + 4, 7);
     doc.setFontSize(14);
     doc.setTextColor(121, 20, 42);
-    doc.text('Enlace Operativo', margin + 3.8, 7.5);
+    doc.text('Enlace Responsable', margin + 3.8, 8.5);
     doc.setFontSize(11);
     doc.setTextColor(51, 50, 48);
-    doc.text('(Nombre, Firma, Cargo y' + '\n' + ' Dependencia, Entidad o' + '\n' + '        Ayuntamiento)', 4.8, 7.7); // Detalles del responsable
+    doc.text('       Nombre y Firma', 4.8, 8.7); // Detalles del responsable
 
     doc.save('acuse_de_registro_CECAN.pdf');
   };
