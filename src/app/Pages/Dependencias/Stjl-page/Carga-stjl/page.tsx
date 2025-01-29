@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 import { Beneficiario } from '../../../Interfaces/beneficiarioTable';
 import Navbar from '../Components-stjl/Navbar';
-import Footer from '../../../../Pages/Components/Footer';
+import Footer from '../../../Components/Footer';
 import { logo64, logopub64 } from '../../Sebien-page/Carga-sebien/imagenData';
 
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
